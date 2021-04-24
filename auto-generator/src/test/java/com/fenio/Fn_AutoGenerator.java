@@ -16,10 +16,16 @@ import java.util.ArrayList;
 
 public class Fn_AutoGenerator {
 
+    /**
+     * MyBatis-Plus 官网教程
+     * https://baomidou.com
+     * https://baomidou.com/guide/
+     *
+     * 代码生成器
+     * https://baomidou.com/guide/generator.html#使用教程
+     * @param args
+     */
     public static void main(String[] args) {
-        //MyBatis-Plus 官网教程
-        //https://baomidou.com/guide/generator.html#使用教程
-
         // 需要构建一个 代码自动生成器 对象
         AutoGenerator mpg = new AutoGenerator();
         // 配置策略
