@@ -68,7 +68,7 @@ public class Fn_AutoGenerator {
         // 设置要映射的表名
         String[] dbTables = new String[]{
                 "blog_tags",
-                "course","links",
+                "course",
                 "sys_settings",
                 "user_record",
                 " user_say"
