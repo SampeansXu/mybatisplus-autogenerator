@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/auto-generator/auto-generator.iml" filepath="$PROJECT_DIR$/auto-generator/auto-generator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mybatisplus-autogenerator.iml" filepath="$PROJECT_DIR$/.idea/mybatisplus-autogenerator.iml" />
+    </modules>
+  </component>
+</project>
