@@ -89,9 +89,9 @@ public class Fn_AutoGenerator {
         tableFills.add(gmtModified);
         strategy.setTableFillList(tableFills);
         // 乐观锁
-        strategy.setVersionFieldName("version");
-        strategy.setRestControllerStyle(true);
-        strategy.setControllerMappingHyphenStyle(true); // localhost:8080/hello_id_2
+//        strategy.setVersionFieldName("version");
+//        strategy.setRestControllerStyle(true);
+//        strategy.setControllerMappingHyphenStyle(true); // localhost:8080/hello_id_2
         mpg.setStrategy(strategy);
         //执行
         mpg.execute();
