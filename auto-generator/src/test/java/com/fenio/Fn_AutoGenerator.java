@@ -15,12 +15,12 @@ public class Fn_AutoGenerator {
 
     private static TemplateConfig getTemplateConfig() {
         return new TemplateConfig()
-                .setController("/templates-generator/controller.java.vm")
-                .setService("/templates-generator/service.java.vm")
-                .setServiceImpl("/templates-generator/serviceImpl.java.vm")
-                .setEntity("/templates-generator/entity.java.vm")
-                .setMapper("/templates-generator/mapper.java.vm")
-                .setXml("/templates-generator/mapper.xml.vm");
+//                .setController("/templates/controller.java.vm")
+//                .setService("/templates/service.java.vm")
+//                .setServiceImpl("/templates/serviceImpl.java.vm")
+                .setEntity("/templates/entity.java.vm")
+//                .setMapper("/templates/mapper.java.vm")
+                .setXml("/templates/mapper.xml.vm");
     }
 
     /**

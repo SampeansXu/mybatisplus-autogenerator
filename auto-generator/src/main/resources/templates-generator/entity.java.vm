@@ -1,30 +1,32 @@
-package ${package.Entity}import com.baomidou.mybatisplus.annotation.*;
+package ${package.Entity}
+
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-;
-#foreach($pkg in ${table.importPackages})
-    ${pkg}
-;
-#end
+##;
+###foreach($pkg in ${table.importPackages})
+##    ${pkg}
+##;
+###end
 #if(${swagger2})
 #end
 #if(${entityLombokModel})
 #end
 
 /**
- * @auther ${author}
- * @create ${cfg.dateTime}
  * @describe $!{table.comment}实体类
+ * @Author ${author}
+ * @create ${cfg.dateTime}
  */
 #if(${entityLombokModel})
 @Data
 #end
 @TableName("${table.name}")
 #if(${swagger2})
-@JsonInclude(JsonInclude.Include.NON_NULL)
+## @JsonInclude(JsonInclude.Include.NON_NULL)
 @ApiModel(value = "${entity}对象", description = "$!{table.comment}")
 #end
 #if(${superEntityClass})

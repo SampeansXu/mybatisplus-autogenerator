@@ -13,9 +13,12 @@ import ${superControllerClassPackage};
 #end
 
 /**
- * @auther ${author}
- * @create ${cfg.dateTime}
- * @describe $!{table.comment}前端控制器
+ * <p>
+ * $!{table.comment} 前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
  */
 #if(${restControllerStyle})
 @RestController
@@ -27,12 +30,12 @@ import ${superControllerClassPackage};
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-    #if(${superControllerClass})
-    public class ${table.controllerName} extends ${superControllerClass} {
-    #else
-    public class ${table.controllerName} {
-    #end
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
 
-        }
+}
 
 #end
