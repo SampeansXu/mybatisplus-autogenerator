@@ -1,0 +1,18 @@
+package ${package.Service};
+${package.Entity}
+.${entity};
+    ${superServiceClassPackage}
+        ;
+
+/**
+ * @auther ${author}
+ * @create ${cfg.dateTime}
+ * @describe $!{table.comment}服务类
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+        }
+#end
