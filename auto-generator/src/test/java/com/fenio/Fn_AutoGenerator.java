@@ -3,13 +3,18 @@ package com.fenio;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fn_AutoGenerator {
 
@@ -44,14 +49,17 @@ public class Fn_AutoGenerator {
         String projectPath = System.getProperty("modules.flow");
         gc.setOutputDir(/*StringUtils.isEmpty(projectPath) ? "" :*/ projectPath + "/jianzhuj");
         gc.setAuthor("xushengbin@hqwx.com");
+        // 是否打开输出目录(默认值：null)
         gc.setOpen(false);
-        gc.setFileOverride(false);
-        // 是否覆盖
-        gc.setServiceName("%sService");
-        // 去Service的I前缀
-        gc.setIdType(IdType.ID_WORKER);
-        gc.setDateType(DateType.ONLY_DATE);
+        //实体属性 Swagger2 注解
         gc.setSwagger2(true);
+        // 是否覆盖已有文件(默认值：false)
+        gc.setFileOverride(true);
+        // 去Service的I前缀
+        gc.setServiceName("%sService");
+        gc.setIdType(IdType.ID_WORKER);
+        // 配置时间类型策略（date类型），如果不配置会生成LocalDate类型
+        gc.setDateType(DateType.ONLY_DATE);
         mpg.setGlobalConfig(gc);
 
         //2、设置数据源
@@ -67,12 +75,60 @@ public class Fn_AutoGenerator {
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName("blog");
         pc.setParent("cn.huanju.edu100.cms.siteapp.infrastructure.repository");
-        pc.setEntity("model");
-        pc.setMapper("mapper");
+        // Service包名
         pc.setService("service");
+        // Entity包名
+        pc.setEntity("model");
+        // Mapper包名
+        pc.setMapper("mapper");
+        // ServiceImpl包名
         pc.setServiceImpl("service.impl");
+        // Controller包名
         pc.setController("controller");
+        // Mapper.xml包名
+        pc.setXml("mapper.xml");
         mpg.setPackageInfo(pc);
+
+        // 自定义配置
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+            }
+        };
+        // 如果模板引擎是 freemarker
+        String templatePath = "/templates/mapper.xml.ftl";
+        // 如果模板引擎是 velocity
+        // String templatePath = "/templates/mapper.xml.vm";
+        // 自定义输出配置
+        List<FileOutConfig> focList = new ArrayList<>();
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig(templatePath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+                // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+                return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
+                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+        /*
+        cfg.setFileCreate(new IFileCreate() {
+            @Override
+            public boolean isCreate(ConfigBuilder configBuilder, FileType fileType, String filePath) {
+                // 判断自定义文件夹是否需要创建
+                checkDir("调用默认方法创建的目录，自定义目录用");
+                if (fileType == FileType.MAPPER) {
+                    // 已经生成 mapper 文件判断存在，不想重新生成返回 false
+                    return !new File(filePath).exists();
+                }
+                // 允许生成模板文件
+                return true;
+            }
+        });
+        */
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
+
 
         //4、策略配置
         StrategyConfig strategy = new StrategyConfig();
@@ -108,32 +164,12 @@ public class Fn_AutoGenerator {
         // 自动lombok；
         strategy.setEntityLombokModel(true);
         strategy.setLogicDeleteFieldName("deleted");
-
         // 驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);
         // 表前缀
         strategy.setTablePrefix(pc.getModuleName() + "_");
-
-//        // 数据库表配置
-//        StrategyConfig strategy = new StrategyConfig();
-//        // 数据库表映射到实体的命名策略:下划线转驼峰
-//        strategy.setNaming(NamingStrategy.underline_to_camel);
-//        // 数据库表字段映射到实体的命名策略, 未指定按照 naming 执行
-//        strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-//        // 实体是否为lombok模型（默认 false）
-//        strategy.setEntityLombokModel(true);
-//        // 生成 @RestController 控制器
-//        strategy.setRestControllerStyle(true);
-//        // 实体类主键名称设置
-//        strategy.setSuperEntityColumns("id");
-//        // 需要排除的表名，允许正则表达式
-//        //strategy.setExclude("***");
-//        // 是否生成实体时，生成字段注解 默认false;
-//        strategy.setEntityTableFieldAnnotationEnable(true);
-//        // 驼峰转连字符
-//        strategy.setControllerMappingHyphenStyle(true);
-//        // 表前缀
-//        strategy.setTablePrefix(pc.getModuleName() + "_");
+        // 是否生成实体时，生成字段注解 默认false;
+        strategy.setEntityTableFieldAnnotationEnable(true);
 
         // 自动填充配置
         TableFill gmtCreate = new TableFill("gmt_create", FieldFill.INSERT);
@@ -147,6 +183,8 @@ public class Fn_AutoGenerator {
 //        strategy.setRestControllerStyle(true);
 //        strategy.setControllerMappingHyphenStyle(true); // localhost:8080/hello_id_2
         mpg.setStrategy(strategy);
+        // 在代码生成器主类上配置模板引擎
+        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         //执行
         mpg.execute();
     }
